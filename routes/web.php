@@ -25,6 +25,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         })->name('admin.forbidden.white');
 
         Route::middleware('auth.can')->group(function () {
+            Route::post('/upload', 'UploadController@upload')->name('admin.upload');
+
             Route::get('/user', 'UserController@index')->name('admin.user.index');
             Route::get('/user/create', 'UserController@create')->name('admin.user.create');
             Route::post('/user/store', 'UserController@store')->name('admin.user.store');
@@ -54,11 +56,37 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
             Route::post('/menu/update', 'MenuController@update')->name('admin.menu.update');
             Route::post('/menu/delete', 'MenuController@delete')->name('admin.menu.delete');
 
-            Route::get('/test1', 'TestController@test1')->name('admin.test1.index');
-            Route::get('/test2', 'TestController@test2')->name('admin.test2.index');
-            Route::get('/test3', 'TestController@test3')->name('admin.test3.index');
-            Route::get('/test4', 'TestController@test4')->name('admin.test4.index');
-            Route::get('/test5', 'TestController@test5')->name('admin.test5.index');
+            Route::get('/category', 'CategoryController@index')->name('category.index');
+            Route::get('/category/create', 'CategoryController@create')->name('category.create');
+            Route::post('/category/store', 'CategoryController@store')->name('category.store');
+            Route::get('/category/edit', 'CategoryController@edit')->name('category.edit');
+            Route::post('/category/update', 'CategoryController@update')->name('category.update');
+            Route::post('/category/delete', 'CategoryController@delete')->name('category.delete');
+            Route::post('/category/status', 'CategoryController@status')->name('category.status');
+
+            Route::get('/links', 'LinksController@index')->name('links.index');
+            Route::get('/links/create', 'LinksController@create')->name('links.create');
+            Route::post('/links/store', 'LinksController@store')->name('links.store');
+            Route::get('/links/edit', 'LinksController@edit')->name('links.edit');
+            Route::post('/links/update', 'LinksController@update')->name('links.update');
+            Route::post('/links/delete', 'LinksController@delete')->name('links.delete');
+            Route::post('/links/status', 'LinksController@status')->name('links.status');
+
+            Route::get('/tags', 'TagsController@index')->name('tags.index');
+            Route::get('/tags/create', 'TagsController@create')->name('tags.create');
+            Route::post('/tags/store', 'TagsController@store')->name('tags.store');
+            Route::post('/tags/delete', 'TagsController@delete')->name('tags.delete');
+
+            Route::get('/lunbo', 'LunboController@index')->name('lunbo.index');
+            Route::get('/lunbo/create', 'LunboController@create')->name('lunbo.create');
+            Route::post('/lunbo/store', 'LunboController@store')->name('lunbo.store');
+            Route::get('/lunbo/edit', 'LunboController@edit')->name('lunbo.edit');
+            Route::post('/lunbo/update', 'LunboController@update')->name('lunbo.update');
+            Route::post('/lunbo/delete', 'LunboController@delete')->name('lunbo.delete');
+            Route::post('/lunbo/status', 'LunboController@status')->name('lunbo.status');
+
+            Route::get('/config/index', 'ConfigController@index')->name('config.index');
+            Route::post('/config/store', 'ConfigController@store')->name('config.store');
         });
     });
 });
