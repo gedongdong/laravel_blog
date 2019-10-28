@@ -12,14 +12,13 @@
 namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tags extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'tags';
 
     protected $guarded = [];
-
-    const STATUS_ENABLE = 1;
-
-    const STATUS_DISABLE = -1;
 }

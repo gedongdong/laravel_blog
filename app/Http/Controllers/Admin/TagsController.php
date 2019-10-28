@@ -12,11 +12,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Models\Category;
-use App\Http\Models\Posts;
 use App\Http\Models\Tags;
 use App\Library\Response;
-use App\Validate\CategoryStoreValidate;
 use App\Validate\TagsStoreValidate;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;

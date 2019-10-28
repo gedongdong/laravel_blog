@@ -12,9 +12,12 @@
 namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Posts extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'posts';
 
     protected $guarded = [];
@@ -22,4 +25,9 @@ class Posts extends Model
     const STATUS_ENABLE = 1;
 
     const STATUS_DISABLE = -1;
+
+    public function category()
+    {
+        return $this->hasOne('App\Http\Models\Category', 'id', 'cate_id');
+    }
 }

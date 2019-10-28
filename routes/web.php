@@ -87,6 +87,14 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
             Route::get('/config/index', 'ConfigController@index')->name('config.index');
             Route::post('/config/store', 'ConfigController@store')->name('config.store');
+
+            Route::get('/post', 'PostController@index')->name('post.index');
+            Route::get('/post/create', 'PostController@create')->name('post.create');
+            Route::post('/post/store', 'PostController@store')->name('post.store');
+            Route::get('/post/edit', 'PostController@edit')->name('post.edit');
+            Route::post('/post/update', 'PostController@update')->name('post.update');
+            Route::post('/post/delete', 'PostController@delete')->name('post.delete');
+            Route::post('/post/status', 'PostController@status')->name('post.status');
         });
     });
 });
