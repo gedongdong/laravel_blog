@@ -98,3 +98,9 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         });
     });
 });
+
+//前端路由
+Route::middleware(['switch', 'common'])->namespace('Index')->group(function () {
+    Route::get('/', 'IndexController@index')->name('index.white');
+    Route::get('/cate', 'CategoryController@index')->name('category.white');
+});

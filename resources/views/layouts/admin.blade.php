@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{{ env('APP_NAME','Laravel') }}-管理后台</title>
+    <title>{{ env('APP_NAME','个人博客') }}-管理后台</title>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
     @yield('style')
 </head>
@@ -14,8 +14,8 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="{{ route('admin.index.white') }}">控制台</a></li>
-            <li class="layui-nav-item"><a href="https://github.com/gedongdong/laravel_rbac_permission">Github</a></li>
-            <li class="layui-nav-item"><a href="">网站首页</a></li>
+            <li class="layui-nav-item"><a href="https://github.com/gedongdong/laravel_rbac_permission" target="_blank">Github</a></li>
+            <li class="layui-nav-item"><a href="{{ route('index.white') }}" target="_blank">网站首页</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">

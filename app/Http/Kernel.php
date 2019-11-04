@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'login' => \App\Http\Middleware\LoginAuthenticated::class,
         'menu' => \App\Http\Middleware\MenuMiddleware::class,
         'auth.can' => \App\Http\Middleware\CanMiddleware::class,
+        'switch' => \App\Http\Middleware\SwitchMiddleware::class,
+        'common' => \App\Http\Middleware\CommonMiddleware::class,
     ];
 }
