@@ -103,4 +103,5 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 Route::middleware(['switch', 'common'])->namespace('Index')->group(function () {
     Route::get('/', 'IndexController@index')->name('index.white');
     Route::get('/cate', 'CategoryController@index')->name('category.white');
+    Route::get('/info', 'CategoryController@info')->name('category_info.white');
 });

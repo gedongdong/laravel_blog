@@ -1,5 +1,25 @@
 @extends('layouts.index')
 
+@section('style')
+    <style>
+        #page li {
+            display: inline-block;
+        }
+
+        #page .active span {
+            background-color: #009688;
+            color: #fff;
+            border: 0px;
+            height: 30px;
+            border-radius: 2px;
+        }
+
+        #page .disabled span {
+            color: #ccc;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="layui-row layui-col-space20">
         <div class="layui-col-md8">
@@ -7,10 +27,14 @@
                 <div class="layui-col-md12">
                     <div class="layui-carousel" id="carousel">
                         <div carousel-item>
-                            <div><img src="https://img.zcool.cn/community/0132815c2581eba80121df90120d8c.jpg@1380w"
-                                      alt=""></div>
-                            <div><img src="https://img.zcool.cn/community/01cdfb5c244470a8012029ac59da4c.png@1380w"
-                                      alt=""></div>
+                            @foreach($lunbo as $item)
+                                <div>
+                                    <a href="@if($item->url){{ $item->url }}@else javascript:void (0) @endif
+                                            ">
+                                        <img src="{{ $item->src }}" alt="">
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -25,284 +49,60 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
+                @foreach($posts as $post)
+                    <div class="layui-col-md12 margin20"></div>
+                    <div class="layui-col-md12">
+                        <div class="main list">
+                            <div class="subject"><a href="/cate?id={{ $post->category->id }}" class="caty">[{{ $post->category->name }}]</a><a
+                                        href="/info?id={{ $post->id }}"
+                                        title="{{ $post->title }}">{{ $post->title }}</a><em> {{ $post->created_at }}
+                                    发布</em></div>
+                            <div class="content layui-row">
+                                <div class="layui-col-md4 list-img">
+                                    <a href="javascript:;">
+                                        @if($post->photo)
+                                            <img src="{{ $post->photo }}" alt="">
+                                        @else
+                                            <img src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg">
+                                        @endif
+                                    </a>
                                 </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
+                                <div class="layui-col-md8">
+                                    <div class="list-text">
+                                        @if($post->summary)
+                                            {{ $post->summary }}
+                                        @else
+                                            aaa
+                                        @endif
                                     </div>
+                                    <div class="list-stat layui-row">
 
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
+                                        @if($post->tags_name)
+                                            <div class="layui-col-xs3 layui-col-md3 Label">
+                                                <i class="layui-icon layui-icon-note"></i>
+                                                @foreach($post->tags_name as $item1)
+                                                    <a href="javascript:;">{{ $item1 }}</a>
+                                                @endforeach
+                                            </div>
+                                        @endif
 
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
+                                        <div class="layui-col-xs3 layui-col-md3">
+                                            <i class="layui-icon layui-icon-read"></i>
+                                            <em>{{ $post->click }}次阅读</em>
+                                        </div>
 
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
-                                </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
+                                        <div class="layui-col-xs3 layui-col-md3 alink">
+                                            <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
                 <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
-                                </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
-                                </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
-                                </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="main list">
-                        <div class="subject"><a href="javascript:;" class="caty">[PHP]</a><a href="javascript:;"
-                                                                                             title="用DTcms做一个独立博客网站（响应式模板）">用layui做一个独立博客网站（响应式模板）</a><em>2018-12-28
-                                11:53:24 发布</em></div>
-                        <div class="content layui-row">
-                            <div class="layui-col-md4 list-img">
-                                <a href="javascript:;"><img
-                                            src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg"></a>
-                            </div>
-                            <div class="layui-col-md8">
-                                <div class="list-text">用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）用DTcms做一个独立博客网站（响应式模板），采用DTcms
-                                    V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                                    V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）
-                                </div>
-                                <div class="list-stat layui-row">
-
-                                    <div class="layui-col-xs3 layui-col-md3 Label">
-                                        <i class="layui-icon layui-icon-note"></i>
-                                        <a href="javascript:;">PHP</a>
-                                        <a href="javascript:;">Discuz</a>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-reply-fill"></i>
-                                        <em>12条评论</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3">
-                                        <i class="layui-icon layui-icon-read"></i>
-                                        <em>12次阅读</em>
-                                    </div>
-
-                                    <div class="layui-col-xs3 layui-col-md3 alink">
-                                        <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12" id="pages"></div>
+                <div class="layui-col-md12 layui-box layui-laypage layui-laypage-default"
+                     id="page">{{ $posts->links() }}</div>
             </div>
         </div>
         <div class="layui-col-md4">
@@ -315,7 +115,7 @@
 									<a href="javascript:;">联系站长</a>
 								</span>
                         </div>
-                        <div class="layui-card-body" id="stat" style="display: none;">
+                        <div class="layui-card-body" id="stat">
                             <table class="layui-table">
                                 <colgroup>
                                     <col width="120">
@@ -324,15 +124,11 @@
                                 <tbody>
                                 <tr>
                                     <td>运行时间：</td>
-                                    <td>856 天</td>
+                                    <td>{{ $day }} 天</td>
                                 </tr>
                                 <tr>
                                     <td>发表文章：</td>
-                                    <td>1024 篇</td>
-                                </tr>
-                                <tr>
-                                    <td>注册用户：</td>
-                                    <td>3689 人</td>
+                                    <td>{{ \App\Http\Models\Posts::where('status',\App\Http\Models\Posts::STATUS_ENABLE)->count() }} 篇</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -346,15 +142,16 @@
                                 <tbody>
                                 <tr>
                                     <td>QQ：</td>
-                                    <td>27941662</td>
+                                    <td>2253538281</td>
                                 </tr>
                                 <tr>
                                     <td>Wechat：</td>
-                                    <td>SCHOOP</td>
+                                    <td>gedongdong1988</td>
                                 </tr>
                                 <tr>
-                                    <td>qqGroup：</td>
-                                    <td>88888888</td>
+                                    <td>github：</td>
+                                    <td><a href="https://github.com/gedongdong/laravel_rbac_permission" target="_blank">Laravel
+                                            RBAC Permission</a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -372,61 +169,27 @@
                         <div class="layui-card-body">
                             <table class="layui-table" lay-skin="nob">
                                 <tbody>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="javascript:;">用layui做一个独立博客网站（响应式模板）</a></td>
-                                </tr>
+                                @foreach($hot_post as $item)
+                                    <tr>
+                                        <td><a href="javascript:;">{{ $item->title }}</a></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-								<span>
-									捐助本站
-								</span>
-                        </div>
-                        <div class="layui-card-body" style="text-align: center;">
-                            <img src="https://cdn.layui.com/upload/2017_8/168_1501894831075_19619.jpg"
-                                 style="display: inline-block;">
-                            <br/>
-                            <p>无论多少，都是心意!</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        layui.carousel.render({
+            elem: '#carousel'
+            , width: '100%' //设置容器宽度
+            , arrow: 'always' //始终显示箭头
+        });
+    </script>
 @endsection

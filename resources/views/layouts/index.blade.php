@@ -14,6 +14,7 @@
     <title>首页 - {{ $configs['site_name'] }}</title>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
     <link rel="stylesheet" href="/css/common.css">
+    @yield('style')
 </head>
 <body>
 <header class="layui-bg-cyan">
@@ -63,16 +64,5 @@
 </body>
 <script src="/js/layui/layui.all.js"></script>
 
-<script>
-    layui.carousel.render({
-        elem: '#carousel'
-        , width: '100%' //设置容器宽度
-        , arrow: 'always' //始终显示箭头
-        //,anim: 'updown' //切换动画方式
-    });
-    layui.laypage.render({
-        elem: 'pages' //注意，这里的 test1 是 ID，不用加 # 号
-        , count: 123 //数据总数，从服务端得到
-    });
-</script>
+@yield('script')
 </html>
