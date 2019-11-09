@@ -59,7 +59,7 @@
                                     发布</em></div>
                             <div class="content layui-row">
                                 <div class="layui-col-md4 list-img">
-                                    <a href="javascript:;">
+                                    <a href="/info?id={{ $post->id }}">
                                         @if($post->photo)
                                             <img src="{{ $post->photo }}" alt="">
                                         @else
@@ -92,7 +92,7 @@
                                         </div>
 
                                         <div class="layui-col-xs3 layui-col-md3 alink">
-                                            <a href="javascript:;" class="layui-btn layui-btn-xs">阅读原文</a>
+                                            <a href="/info?id={{ $post->id }}" class="layui-btn layui-btn-xs">阅读原文</a>
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                 <tbody>
                                 @foreach($hot_post as $item)
                                     <tr>
-                                        <td><a href="javascript:;">{{ $item->title }}</a></td>
+                                        <td><a href="/info?id={{ $item->id }}">{{ $item->title }}</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
